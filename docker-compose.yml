@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  localstack:
+    image: localstack/localstack:0.13.0.10
+    container_name: localstack
+    ports:
+      - '127.0.0.1:4566:4566'
+    environment:
+      - DEFAULT_REGION=eu-west-1
+      - SERVICES=sqs
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - AWS_LOCAL_ENDPOINT_URL=http://localhost:4566
+  localstack-init:
+    image: amazon/aws-cli:2.4.4
+    entrypoint: [ "/root/scripts/wait-for-it/wait-for-it.sh", "localstack:4566", "-t", "30", "--" ]
+    volumes:
+      - ./scripts/wait-for-it:/root/scripts/wait-for-it
+      - ./scripts/localstack.sh:/root/localstack.sh
+      - ./scripts/aws:/root/.aws
+    command: bash /root/localstack.sh
+    depends_on:
+      - localstack
