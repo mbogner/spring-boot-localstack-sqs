@@ -1,1 +1,11 @@
-
+cloud:
+  aws:
+    region:
+      static: eu-west-1
+    credentials:
+      profile-name: default
+      access-key: foo
+      secret-key: bar
+    sqs:
+      endpoint: https://localhost.localstack.cloud:4566
+      region: ${cloud.aws.region.static}
