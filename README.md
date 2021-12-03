@@ -25,7 +25,3 @@ as simple strings.
 
 The class SampleQueueMessageConsumer is a sample how to add a consumer for the "sample-queue" queue. It just logs every
 incoming message.
-
-# Hint
-
-Sending is very slow on my machine. Not sure yet why.

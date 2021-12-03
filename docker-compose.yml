@@ -1,17 +1,23 @@
 version: '3.9'
 services:
   localstack:
-    image: localstack/localstack:0.13.0.10
+    image: localstack/localstack:latest
     container_name: localstack
     ports:
       - '127.0.0.1:4566:4566'
     environment:
+      - EDGE_PORT=4566
       - DEFAULT_REGION=eu-west-1
       - SERVICES=sqs
       - DEBUG=0
       - DATA_DIR=/tmp/localstack/data
+      - START_WEB=0
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DYNAMODB_ERROR_PROBABILITY=0.0
+      - DOCKER_HOST=unix:///var/run/docker.sock
   localstack-init:
-    image: amazon/aws-cli:2.4.4
+    image: amazon/aws-cli:latest
     entrypoint: [ "/root/scripts/wait-for-it/wait-for-it.sh", "localstack:4566", "-t", "30", "--" ]
     volumes:
       - ./scripts/wait-for-it:/root/scripts/wait-for-it

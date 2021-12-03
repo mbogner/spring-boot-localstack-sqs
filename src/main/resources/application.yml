@@ -7,5 +7,5 @@ cloud:
       access-key: foo
       secret-key: bar
     sqs:
-      endpoint: https://localhost.localstack.cloud:4566
+      endpoint: http://localhost:4566
       region: ${cloud.aws.region.static}
